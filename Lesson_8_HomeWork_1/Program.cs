@@ -6,8 +6,8 @@ namespace Lesson_8_HomeWork_1
     {
         static void Main(string[] args)
         {
-            int rw = Prompt("Введите кол-во стобцов: ");
-            int cl = Prompt("Введите кол-во строк: ");
+            int rw = Prompt("Введите кол-во строк: ");
+            int cl = Prompt("Введите кол-во столбцов: ");
             int[,] ar = GetArray(rw, cl);
             PrintArray(ar, rw, cl);
             int[,] arCalc = CalcArray(ar, rw, cl);
@@ -34,34 +34,25 @@ namespace Lesson_8_HomeWork_1
                 return result;
             }
 
-            int[,] CalcArray(int[,] arr, int r, int c)
+            int[,] CalcArray(int[,] arr, int c, int r)
             {
-                int[,] result = new int[r,c];
-                for (int i = 0; i < r; i++)
+                int b;
+                for (int i = 0; i < c; i++)
                 {
-                   result[i,0] = arr[i,0];
-                   for (int j = 0; j < c; j++)
-                   {
-                        for (int x = 0; x < c; x++)
+                    for (int j = 0; j < r; j++)
+                    {
+                        for (int x = 0; x < r - 1; x++)
                         {
-                            if(j > 0)
+                            if (arr[i, x] < arr[i,x + 1])
                             {
-                                if(result[i,j] < arr[i,x] && result[i,j-1] > arr[i,x])
-                                {
-                                    result[i,j] = arr[i,x];
-                                }
-                            }
-                            else
-                            {
-                                if(result[i,j] < arr[i,x])
-                                {
-                                    result[i,j] = arr[i,x];
-                                }
+                                b = arr[i,x];
+                                arr[i,x] = arr[i,x + 1];
+                                arr[i,x + 1] = b;
                             }
                         }
-                   }
+                    }
                 }
-                return result;
+                return arr;
             }
             void PrintArray(int[,] arr, int r, int c)
             {
